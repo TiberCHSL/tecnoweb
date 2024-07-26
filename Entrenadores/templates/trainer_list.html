@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nuestros Entrenadores - FitTrainer Pro{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for trainer in trainers %}
+                <div class="col-md-4 trainer-card">
+                    <div id="isotope-gallery-container" style="position: relative; overflow: hidden; height: 330px;" class="isotope">
+                        {% if trainer.avatarentr.avatar %}
+                            <img src="{{ trainer.avatarentr.avatar.url }}" alt="{{ trainer.user.get_full_name }}" class="trainer-image" style="height: 300px;">
+                        {% else %}
+                            <img src="{% static 'default.jpg' %}" alt="{{ trainer.user.get_full_name }}" class="trainer-image" style="height: 300px;" >
+                        {% endif %}
+                    </div>
+                    <h3>{{ trainer.user.get_full_name }}</h3>
+                    <p>
+                        {% for lugar in trainer.Lugares_trabajo.all %}
+                            {{ lugar.get_name_display }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {% with edu=trainer.educacion_set.first %}
+                            {% if edu %}
+                                {{ edu.titulo }}
+                            {% endif %}
+                        {% endwith %}
+                    </p>
+                    <p>
+                        {% for esp in trainer.Especializacion.all %}
+                            {% if forloop.counter0 < 3 %}
+                                {{ esp.get_nombre_esp_display }}{% if not forloop.last and forloop.counter0 < 2 %}, {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>${{ trainer.price_per_hour }} / hr</p>
+                    <a href="{% url 'trainer_detail' trainer.rut_en %}" class="btn btn-primary">1ª clase gratis</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

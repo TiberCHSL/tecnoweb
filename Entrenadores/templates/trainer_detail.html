@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalle del Entrenador - FitTrainer Pro{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>{{ trainer.user.get_full_name }}</h2>
+        {% if trainer.avatarentr.avatar %}
+            <img src="{{ trainer.avatarentr.avatar.url }}" alt="{{ trainer.user.get_full_name }}" class="trainer-image">
+        {% else %}
+            <img src="{% static 'default.jpg' %}" alt="{{ trainer.user.get_full_name }}" class="trainer-image">
+        {% endif %}
+        <p>{{ trainer.direccion }}</p>
+        <h3>Lugares de trabajo</h3>
+        <p>
+            {% for lugar in trainer.Lugares_trabajo.all %}
+                {{ lugar.get_name_display }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <h3>Educación</h3>
+        <p>
+            {% with edu=trainer.educacion_set.first %}
+                {% if edu %}
+                    {{ edu.titulo }}
+                {% endif %}
+            {% endwith %}
+        </p>
+        <h3>Especializaciones</h3>
+        <p>
+            {% for esp in trainer.Especializacion.all %}
+                {{ esp.get_nombre_esp_display }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <h3>Galería</h3>
+        <div class="row">
+            {% for image in images %}
+                <div class="col-md-4">
+                    <img src="{{ image.img_entr.url }}" alt="Imagen del entrenador" class="img-thumbnail">
+                </div>
+            {% endfor %}
+        </div>
+        <h3>Agendar Entrenamiento</h3>
+        {% if 'OL' in modalities %}
+            <a href= "http://localhost:8000/appointment/request/1/" class="btn btn-success">Agendar Entrenamiento Online</a>
+        {% endif %}
+        {% if 'PR' in modalities %}
+            <a href="http://localhost:8000/appointment/request/2/" class="btn btn-secondary">Agendar Entrenamiento Online</a>
+        {% endif %}
+    </div>
+{% endblock %}
+

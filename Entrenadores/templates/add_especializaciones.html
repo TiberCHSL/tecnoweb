@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Agregar Especializaciones</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="boolean-field">
+                        {% for checkbox in form.especializaciones %}
+                            <div>
+                                {{ checkbox.tag }}
+                                <label for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Agregar Especializaciones</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

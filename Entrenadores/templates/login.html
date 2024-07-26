@@ -1,0 +1,22 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+
+{% block title %}FitTrainer Pro{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Por favor, ingrese sus datos:</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-field">
+            <label for="id_username">Nombre de usuario:</label>
+            <input type="text" name="username" id="id_username" class="form-control">
+        </div>
+        <div class="input-field">
+            <label for="id_password">Contraseña:</label>
+            <input type="password" name="password" id="id_password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Agregar Experiencia Previa como Entrenador</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="input-field">
+                        <label for="{{ form.cargo.id_for_label }}">Cargo</label>
+                        {{ form.cargo }}
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="{{ form.anos_exp.id_for_label }}">Años de Experiencia</label>
+                        {{ form.anos_exp }}
+                    </div>
+                    
+                    <div class="input-field">
+                        <label for="{{ form.desc.id_for_label }}">Descripción</label>
+                        {{ form.desc }}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Agregar Experiencia</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+

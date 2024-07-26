@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Agregar Título profesional</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    <div id="educacion-form-set">
+                        {% for form in formset %}
+                            <div class="input-field">
+                                <label for="{{ form.titulo.id_for_label }}">Título</label>
+                                {{ form.titulo }}
+                            </div>
+                            <div class="input-field">
+                                <label for="{{ form.nombre_ins.id_for_label }}">Nombre de la institución</label>
+                                {{ form.nombre_ins }}
+                            </div>
+                            <div class="input-field">
+                                <label for="{{ form.ano_egreso.id_for_label }}">Año de egreso</label>
+                                {{ form.ano_egreso }}
+                            </div>
+                            <br>
+                        {% endfor %}
+                    </div>
+                    <!--<button type="button" onclick="addAnotherEducacion()">Add another</button> -->
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- In your template, ensure the management form is rendered -->
+{{ formset.management_form }}
+
+<!-- Your JavaScript should update TOTAL_FORMS correctly -->
+<script>
+    function addAnotherEducacion() {
+        // Fetch the current TOTAL_FORMS value
+        const totalFormsInput = document.querySelector('#id_educacion-TOTAL_FORMS');
+        let formIndex = totalFormsInput? parseInt(totalFormsInput.value, 10) : 0;
+    
+        // Check if formIndex is successfully parsed
+        if (isNaN(formIndex)) {
+            console.error("Failed to parse formIndex");
+            return; // Exit the function early if formIndex couldn't be parsed
+        }
+    
+        // Increment formIndex
+        formIndex += 1;
+    
+        // Update the TOTAL_FORMS value
+        totalFormsInput.value = formIndex;
+    
+        // Log the new value to ensure it's being updated correctly
+        console.log("Updated TOTAL_FORMS to:", formIndex);
+    
+        // Capture the form HTML from the #empty-form div
+        const emptyFormDiv = document.querySelector('#empty-form');
+        const newFormHtml = emptyFormDiv? emptyFormDiv.innerHTML : '';
+    
+        // Replace __prefix__ placeholders with the correct form index
+        const updatedFormHtml = newFormHtml.replace(/__prefix__/g, formIndex);
+    
+        // Insert the new form HTML into the educacion-form-set div
+        document.querySelector('#educacion-form-set').innerHTML += updatedFormHtml;
+    
+        // Optional: Log the new form HTML to ensure it's being added correctly
+        console.log("Added new form HTML:", updatedFormHtml);
+    }
+    </script>
+</script>
+<!-- Hidden empty form for cloning -->
+<div id="empty-form" style="display:none;">
+    {{ formset.empty_form.as_p|safe }}
+</div>
+{% endblock %}

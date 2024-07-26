@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Registrarse como Entrenador</h2>
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- User Form Fields -->
+                    <div class="input-field">
+                        <label for="{{ user_form.username.id_for_label }}">Nombre de usuario</label>
+                        {{ user_form.username }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ user_form.first_name.id_for_label }}">Nombres</label>
+                        {{ user_form.first_name }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ user_form.last_name.id_for_label }}">Apellidos</label>
+                        {{ user_form.last_name }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ user_form.password.id_for_label }}">Contraseña</label>
+                        {{ user_form.password }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ user_form.email.id_for_label }}">Correo electrónico</label>
+                        {{ user_form.email }}
+                    </div>
+
+                    <!-- Entrenador Form Fields -->
+                    <div class="input-field">
+                        <label for="{{ entrenador_form.phone.id_for_label }}">Número de celular</label>
+                        {{ entrenador_form.phone }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ entrenador_form.rut_en.id_for_label }}">RUT</label>
+                        {{ entrenador_form.rut_en }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ entrenador_form.birth_date.id_for_label }}">Fecha de nacimiento</label>
+                        {{ entrenador_form.birth_date }}
+                    </div>
+                    <div class="input-field">
+                        <label for="{{ entrenador_form.gender.id_for_label }}">Género</label>
+                        {{ entrenador_form.gender }}
+                    </div>
+
+                    
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
